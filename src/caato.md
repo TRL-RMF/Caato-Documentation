@@ -1,6 +1,6 @@
 # caato
 
-# Introduction*
+## Introduction
 
 The CAATO is a small, nimble Autonomous Ground Vehicle (AGV) developed off of the LOCUST platform with more powerful and accurate motors and a patented (TBC) trolley docking mechanism. This platform will be the first-ever robot to be deployed under the Robotic middleware framework RMF 2.0 program and is developed in joint collaboration with Changi Airport.
 

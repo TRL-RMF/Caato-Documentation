@@ -1,6 +1,6 @@
 # Summary
 
-[Caato*](caato.md)
+[CAATO](caato.md)
 - [Software](./Software.md)
 - [Mechanical](./Mechanical.md)
 - [Electricacl & Electronics](./Electrical.md)
