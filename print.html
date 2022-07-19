@@ -143,6 +143,274 @@
 <div style="break-before: page; page-break-before: always;"></div><h1 id="other-peripherals"><a class="header" href="#other-peripherals">Other Peripherals</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="bom"><a class="header" href="#bom">BOM</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="deployment--operation-concerns"><a class="header" href="#deployment--operation-concerns">Deployment &amp; Operation Concerns</a></h1>
+<h1 id="3d-mapping"><a class="header" href="#3d-mapping">3D Mapping</a></h1>
+<h1 id="3d-mapping-notes"><a class="header" href="#3d-mapping-notes">3D Mapping Notes</a></h1>
+<h2 id="1-initial-mapping"><a class="header" href="#1-initial-mapping">1. Initial Mapping</a></h2>
+<p>In order to start mapping, we need to run the mapping launch file and simultaneously record rosbag</p>
+<p>Example of such mapping launch file:</p>
+<pre><code class="language-jsx">&lt;launch&gt;
+    &lt;!-- &lt;include file=&quot;$(find caato2_bringup)/launch/include/description_caato_3d.launch&quot; /&gt; --&gt;
+
+    &lt;include file=&quot;$(find caato2_bringup)/launch/include/caato2_3d_lasers.launch&quot; /&gt;
+
+    &lt;include file=&quot;$(find roboteq_diff_driver)/launch/driver.launch&quot; &gt;
+    &lt;arg name=&quot;base_frame&quot; value=&quot;base_link&quot;/&gt;
+    &lt;arg name=&quot;pub_odom_tf&quot; value=&quot;true&quot;/&gt;
+    &lt;/include&gt;
+
+    &lt;include file=&quot;$(find caato_teleop)/launch/ds4.launch&quot; /&gt;
+
+&lt;/launch&gt;
+</code></pre>
+<p>After running the launch file, run <code>rosbag record -a</code> in another terminal.</p>
+<p>After completing the mapping, kill the rosbag and followed by the launch file.</p>
+<h2 id="2-obtaining-the-map"><a class="header" href="#2-obtaining-the-map">2. Obtaining the map</a></h2>
+<p>In this stage make use of offline cart node in google cartographer and pass the bag as an argument</p>
+<p>The command would be:</p>
+<pre><code class="language-jsx">roslaunch cartographer_ros offline_cart_3d.launch bag_filenames:=&quot;&lt;/path_to_bag&gt;&quot;
+</code></pre>
+<p>After the node completes cleanly, a .pbstream file will be created.</p>
+<p>offline_cart_node.launch:</p>
+<pre><code class="language-jsx">&lt;launch&gt;
+  &lt;param name=&quot;/use_sim_time&quot; value=&quot;true&quot; /&gt;
+
+  &lt;node name=&quot;rviz&quot; pkg=&quot;rviz&quot; type=&quot;rviz&quot; required=&quot;true&quot;
+      args=&quot;-d $(find cartographer_ros)/configuration_files/demo_3d.rviz&quot; /&gt;
+
+  &lt;node name=&quot;cartographer_offline_node&quot; pkg=&quot;cartographer_ros&quot;
+      type=&quot;cartographer_offline_node&quot; args=&quot;
+          -configuration_directory $(find cartographer_ros)/configuration_files
+          -configuration_basenames cart_3d.lua
+          -urdf_filenames $(find cartographer_ros)/urdf/os1_sensor.urdf
+          -bag_filenames $(arg bag_filenames)&quot;
+      output=&quot;screen&quot;&gt;
+    &lt;remap from=&quot;points2&quot; to=&quot;/os_cloud_node/points&quot; /&gt;
+    &lt;remap from=&quot;imu&quot; to=&quot;/os_cloud_node/imu&quot; /&gt;
+  &lt;/node&gt;
+
+  &lt;node name=&quot;cartographer_occupancy_grid_node&quot; pkg=&quot;cartographer_ros&quot;
+      type=&quot;cartographer_occupancy_grid_node&quot; args=&quot;-resolution 0.05&quot; /&gt;
+&lt;/launch&gt;
+</code></pre>
+<p>Remember you need to pass .lua configuration and the lidar sensor urdf files in the offline cart launch. The example of those files can be seen below:</p>
+<p>cart_3d.lua:</p>
+<pre><code class="language-jsx">
+include &quot;map_builder.lua&quot;
+include &quot;trajectory_builder.lua&quot;
+
+options = {
+  map_builder = MAP_BUILDER,
+  trajectory_builder = TRAJECTORY_BUILDER,
+  map_frame = &quot;map&quot;,
+  tracking_frame = &quot;os_imu&quot;,
+  published_frame = &quot;base_link&quot;,
+  odom_frame = &quot;base_link&quot;,
+  provide_odom_frame = false,
+  publish_frame_projected_to_2d = false,
+  use_odometry = false,
+  use_nav_sat = false,
+  use_landmarks = false,
+  num_laser_scans = 0,
+  num_multi_echo_laser_scans = 0,
+  num_subdivisions_per_laser_scan = 1,
+  num_point_clouds = 1,
+  lookup_transform_timeout_sec = 0.2,
+  submap_publish_period_sec = 0.3,
+  pose_publish_period_sec = 5e-3,
+  trajectory_publish_period_sec = 30e-3,
+  rangefinder_sampling_ratio = 1.,
+  odometry_sampling_ratio = 1.,
+  fixed_frame_pose_sampling_ratio = 1.,
+  imu_sampling_ratio = 1.,
+  landmarks_sampling_ratio = 1.,
+}
+-- Original defaults
+TRAJECTORY_BUILDER_3D.num_accumulated_range_data = 1
+
+MAP_BUILDER.use_trajectory_builder_3d = true
+MAP_BUILDER.num_background_threads = 4
+
+POSE_GRAPH.optimization_problem.huber_scale = 5e2
+POSE_GRAPH.optimize_every_n_nodes = 320
+POSE_GRAPH.constraint_builder.sampling_ratio = 0.03
+POSE_GRAPH.optimization_problem.ceres_solver_options.max_num_iterations = 500
+POSE_GRAPH.constraint_builder.min_score = 0.62
+POSE_GRAPH.constraint_builder.global_localization_min_score = 0.66
+
+-- Modifications
+TRAJECTORY_BUILDER_3D.ceres_scan_matcher.translation_weight = 5.
+
+TRAJECTORY_BUILDER_3D.use_online_correlative_scan_matching = true
+TRAJECTORY_BUILDER_3D.imu_gravity_time_constant = .1
+
+-- No point of trying to SLAM over the points on your cart.
+TRAJECTORY_BUILDER_3D.min_range = 1.0
+TRAJECTORY_BUILDER_3D.max_range = 50
+
+-- These were just my first guess: use more points for SLAMing and adapt a bit for the ranges that are bigger for cars.
+TRAJECTORY_BUILDER_3D.high_resolution_adaptive_voxel_filter.max_length = 5.
+TRAJECTORY_BUILDER_3D.high_resolution_adaptive_voxel_filter.min_num_points = 250.
+TRAJECTORY_BUILDER_3D.low_resolution_adaptive_voxel_filter.max_length = 8.
+TRAJECTORY_BUILDER_3D.low_resolution_adaptive_voxel_filter.min_num_points = 400.
+
+-- The submaps felt pretty big - since the car moves faster, we want them to be
+-- slightly smaller. You are also slamming at 10cm - which might be aggressive
+-- for cars and for the quality of the laser. I increased 'high_resolution',
+-- you might need to increase 'low_resolution'. Increasing the
+-- '*num_iterations' in the various optimization problems also trades
+-- performance/quality.
+TRAJECTORY_BUILDER_3D.submaps.high_resolution = .25
+TRAJECTORY_BUILDER_3D.submaps.low_resolution = .60
+TRAJECTORY_BUILDER_3D.submaps.num_range_data = 270
+TRAJECTORY_BUILDER_3D.ceres_scan_matcher.ceres_solver_options.max_num_iterations = 50
+
+-- Trying loop closing too often will cost CPU and not buy you a lot. There is
+-- little point in trying more than once per submap.
+MAP_BUILDER.pose_graph.optimize_every_n_nodes = 100
+MAP_BUILDER.pose_graph.constraint_builder.sampling_ratio = 0.03
+MAP_BUILDER.pose_graph.optimization_problem.ceres_solver_options.max_num_iterations = 200
+
+MAP_BUILDER.pose_graph.constraint_builder.min_score = 0.5
+
+-- Crazy search window to force loop closure to work. All other changes are probably not needed.
+--MAP_BUILDER.sparse_pose_graph.constraint_builder.max_constraint_distance = 250.
+--MAP_BUILDER.sparse_pose_graph.constraint_builder.fast_correlative_scan_matcher_3d.linear_xy_search_window = 250.
+--MAP_BUILDER.sparse_pose_graph.constraint_builder.fast_correlative_scan_matcher_3d.linear_z_search_window = 30.
+--MAP_BUILDER.sparse_pose_graph.constraint_builder.fast_correlative_scan_matcher_3d.angular_search_window = math.rad(60.)
+--MAP_BUILDER.sparse_pose_graph.constraint_builder.ceres_scan_matcher_3d.ceres_solver_options.max_num_iterations = 50
+</code></pre>
+<p>os1_sensor.urdf</p>
+<pre><code class="language-jsx">&lt;robot name=&quot;os_sensor&quot;&gt;
+  &lt;material name=&quot;orange&quot;&gt;
+    &lt;color rgba=&quot;1.0 0.5 0.2 1&quot; /&gt;
+  &lt;/material&gt;
+  &lt;material name=&quot;gray&quot;&gt;
+    &lt;color rgba=&quot;0.2 0.2 0.2 1&quot; /&gt;
+  &lt;/material&gt;
+
+  &lt;link name=&quot;os_imu&quot;&gt;
+    &lt;visual&gt;
+      &lt;origin xyz=&quot;0.0 0.0 0.0&quot; /&gt;
+      &lt;geometry&gt;
+        &lt;box size=&quot;0.06 0.04 0.02&quot; /&gt;
+      &lt;/geometry&gt;
+      &lt;material name=&quot;orange&quot; /&gt;
+    &lt;/visual&gt;
+  &lt;/link&gt;
+
+  &lt;link name=&quot;os_lidar&quot;&gt;
+    &lt;visual&gt;
+      &lt;origin xyz=&quot;0.0 0.0 0.0&quot; /&gt;
+      &lt;geometry&gt;
+        &lt;cylinder length=&quot;0.07&quot; radius=&quot;0.05&quot; /&gt;
+      &lt;/geometry&gt;
+      &lt;material name=&quot;gray&quot; /&gt;
+    &lt;/visual&gt;
+  &lt;/link&gt;
+
+  &lt;link name=&quot;os_sensor&quot; /&gt;
+
+  &lt;link name=&quot;base_link&quot; /&gt;
+
+  &lt;!-- Legacy data --&gt;
+  &lt;link name=&quot;os&quot; /&gt;
+
+  &lt;joint name=&quot;os_link_joint_legacy&quot; type=&quot;fixed&quot;&gt;
+    &lt;parent link=&quot;base_link&quot; /&gt;
+    &lt;child link=&quot;os&quot; /&gt;
+    &lt;origin xyz=&quot;0.00 0. 0.03618&quot; rpy=&quot;0. 0 0&quot; /&gt;
+  &lt;/joint&gt;
+
+  &lt;joint name=&quot;sensor_link_joint&quot; type=&quot;fixed&quot;&gt;
+    &lt;parent link=&quot;base_link&quot; /&gt;
+    &lt;child link=&quot;os_sensor&quot; /&gt;
+    &lt;origin xyz=&quot;0 0 0&quot; rpy=&quot;0 0 0&quot; /&gt;
+  &lt;/joint&gt;
+
+  &lt;joint name=&quot;imu_link_joint&quot; type=&quot;fixed&quot;&gt;
+    &lt;parent link=&quot;os_sensor&quot; /&gt;
+    &lt;child link=&quot;os_imu&quot; /&gt;
+    &lt;origin xyz=&quot;0.006253 -0.011775 0.007645&quot; rpy=&quot;0 0 0&quot; /&gt;
+  &lt;/joint&gt;
+
+  &lt;joint name=&quot;os_link_joint&quot; type=&quot;fixed&quot;&gt;
+    &lt;parent link=&quot;os_sensor&quot; /&gt;
+    &lt;child link=&quot;os_lidar&quot; /&gt;
+    &lt;origin xyz=&quot;0.0 0.0 0.03618&quot; rpy=&quot;0 0 3.14159&quot; /&gt;
+  &lt;/joint&gt;
+
+&lt;/robot&gt;
+</code></pre>
+<h2 id="3-obtain-pcd-file"><a class="header" href="#3-obtain-pcd-file">3. Obtain PCD file</a></h2>
+<p>In order to obtain the PCD file, we make use of cartographer’s build in node called assets_writer_cart_3d.</p>
+<p>The command is as follows:</p>
+<pre><code class="language-jsx">roslaunch cartographer_ros assets_writer_cart_3d.launch
+****bag_filenames:=${HOME}/Downloads/b3-2016-04-05-14-14-00.bag pose_graph_filename:=${HOME}/Downloads/b3-2016-04-05-14-14-00.bag.pbstream
+</code></pre>
+<p>This will be create a PCD file.</p>
+<p>After obtaining the initial PCD file, it has to be down sampled in order to reduce the time it takes to create the .bt file in the next step.</p>
+<p>The command is as follows:</p>
+<pre><code class="language-jsx">pcl_voxel_grid &lt;input&gt;.pcd downsampled.pcd -leaf 0.05,0.05,0.05
+</code></pre>
+<p>A new down sampled .pcd file will be created.</p>
+<h2 id="4-obtain-bt-file"><a class="header" href="#4-obtain-bt-file">4. Obtain BT file</a></h2>
+<p>To obtain BT file, we have to make use of octomap tracking server and pcdTopointcloud </p>
+<p>The command for pcdTopointcloud launch is as follows:</p>
+<pre><code class="language-jsx">roslaunch octomap_server pcdTopointcloud.launch
+</code></pre>
+<p>Remember to change the file name in the pcdTopointcloud.launch and build again</p>
+<p>The command is as follows:</p>
+<pre><code class="language-jsx">roslaunch octomap_server octomap_tracking_server.launch
+</code></pre>
+<p>Followed by octomap_saver</p>
+<pre><code class="language-jsx">rosrun octomap_server octomap_saver -f &lt;name_of_map&gt;.bt octomap_full:=octomap_full
+</code></pre>
+<p>This will produce a .BT file</p>
+<p>Octomap_tracking_server.launch sample code:</p>
+<pre><code class="language-jsx">&lt;launch&gt;
+
+  &lt;arg name=&quot;path&quot; default=&quot;&quot;/&gt;
+  &lt;arg name=&quot;changeIdFrame&quot; default=&quot;/talker/changes&quot;/&gt;
+
+    &lt;!-- you can load an exisiting tree with &lt;node ... args=&quot;tree.bt&quot;&gt; !--&gt;
+    &lt;node pkg=&quot;octomap_server&quot; type=&quot;octomap_tracking_server_node&quot; name=&quot;octomap_talker&quot;    output=&quot;screen&quot; args=&quot;$(arg path)&quot;&gt;
+        &lt;param name=&quot;resolution&quot; value=&quot;0.05&quot; /&gt;
+        &lt;param name=&quot;frame_id&quot; type=&quot;string&quot; value=&quot;map&quot; /&gt;
+        &lt;param name=&quot;sensor_model/max_range&quot; value=&quot;20.0&quot; /&gt;
+        &lt;param name=&quot;save_directory&quot; value=&quot;$(optenv OCTOMAP_SAVE_DIR ./)&quot; /&gt;
+        &lt;param name=&quot;track_changes&quot; value=&quot;true&quot;/&gt;
+        &lt;param name=&quot;listen_changes&quot; value=&quot;false&quot;/&gt;
+        &lt;param name=&quot;topic_changes&quot; value=&quot;/octomap_tracking_server/changeset&quot; /&gt;
+            &lt;param name=&quot;change_id_frame&quot; value=&quot;$(arg changeIdFrame)&quot; /&gt;
+            &lt;param name=&quot;min_change_pub&quot; value=&quot;0&quot; /&gt;
+            &lt;param name=&quot;filter_ground&quot; value=&quot;false&quot; /&gt;
+            &lt;param name=&quot;pointcloud_max_z&quot; value=&quot;0.5&quot; /&gt;
+            &lt;param name=&quot;pointcloud_min_z&quot; value=&quot;-0.7&quot; /&gt;
+            &lt;param name=&quot;base_frame_id&quot; value=&quot;base_link&quot; /&gt;
+        &lt;!--remap from=&quot;cloud_in&quot; to=&quot;/rgbdslam/batch_clouds&quot; /--&gt;
+    &lt;/node&gt;
+&lt;/launch&gt;
+</code></pre>
+<p>The most important arguments are:</p>
+<ol>
+<li>pointcloud_max_z</li>
+<li>pointcloud_min_z</li>
+<li>base_frame_id</li>
+</ol>
+<h2 id="5-obtaining-2d-map"><a class="header" href="#5-obtaining-2d-map">5. Obtaining 2D map</a></h2>
+<p>This step is similar to step 4, but with changes to pointcloud_max_z and pointcloud_min_z in the tracking_server launch file. The changes are as follows</p>
+<ol>
+<li>pointcloud_max_z = 0.5</li>
+<li>pointcloud_min_z = -0.5</li>
+</ol>
+<p>Then rerun the following command:</p>
+<pre><code class="language-jsx">roslaunch octomap_server octomap_tracking_server.launch
+</code></pre>
+<p>🌟In this step, we will be making sure of the normal 2D map_saver instead of the octomap_server. Furthermore, change the topic that the server subscribes to from /map to /projected_map</p>
+<p>Use the following command:</p>
+<pre><code class="language-jsx">rosrun map_server map_saver map:=/projected_map -f name_of_map
+</code></pre>
+<p>Map.yaml and map.png files will be created.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="future-upgrades"><a class="header" href="#future-upgrades">Future Upgrades</a></h1>
 
                     </main>
