@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Caato - caato book</title>
+        <title>Caato* - caato book</title>
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="caato.html" class="active">Caato</a></li><li class="chapter-item expanded "><a href="Introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="Software.html"><strong aria-hidden="true">2.</strong> Software</a></li><li class="chapter-item expanded "><a href="Mechanical.html"><strong aria-hidden="true">3.</strong> Mechanical</a></li><li class="chapter-item expanded "><a href="Electrical.html"><strong aria-hidden="true">4.</strong> Electricacl & Electronics</a></li><li class="chapter-item expanded "><a href="Other.html"><strong aria-hidden="true">5.</strong> Other Peripherals</a></li><li class="chapter-item expanded "><a href="BOM.html"><strong aria-hidden="true">6.</strong> BOM</a></li><li class="chapter-item expanded "><a href="Operation.html"><strong aria-hidden="true">7.</strong> Operation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="3D.html"><strong aria-hidden="true">7.1.</strong> 3D Mapping</a></li></ol></li><li class="chapter-item expanded "><a href="Future.html"><strong aria-hidden="true">8.</strong> Future Upgrades</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="caato.html" class="active">Caato*</a></li><li class="chapter-item expanded "><a href="Software.html"><strong aria-hidden="true">1.</strong> Software</a></li><li class="chapter-item expanded "><a href="Mechanical.html"><strong aria-hidden="true">2.</strong> Mechanical</a></li><li class="chapter-item expanded "><a href="Electrical.html"><strong aria-hidden="true">3.</strong> Electricacl & Electronics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Table.html"><strong aria-hidden="true">3.1.</strong> Table of Electronics</a></li><li class="chapter-item expanded "><a href="Power.html"><strong aria-hidden="true">3.2.</strong> Power Diagram and Schematics</a></li><li class="chapter-item expanded "><a href="Programmable.html"><strong aria-hidden="true">3.3.</strong> Programmable Logic Controller</a></li></ol></li><li class="chapter-item expanded "><a href="Other.html"><strong aria-hidden="true">4.</strong> Other Peripherals</a></li><li class="chapter-item expanded "><a href="BOM.html"><strong aria-hidden="true">5.</strong> BOM</a></li><li class="chapter-item expanded "><a href="Operation.html"><strong aria-hidden="true">6.</strong> Operation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="3D.html"><strong aria-hidden="true">6.1.</strong> 3D Mapping</a></li></ol></li><li class="chapter-item expanded "><a href="Future.html"><strong aria-hidden="true">7.</strong> Future Upgrades</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -135,12 +135,52 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="caato"><a class="header" href="#caato">caato</a></h1>
+<h1 id="introduction"><a class="header" href="#introduction">Introduction*</a></h1>
+<p>The CAATO is a small, nimble Autonomous Ground Vehicle (AGV) developed off of the LOCUST platform with more powerful and accurate motors and a patented (TBC) trolley docking mechanism. This platform will be the first-ever robot to be deployed under the Robotic middleware framework RMF 2.0 program and is developed in joint collaboration with Changi Airport.</p>
+<p>Checkout the CAATO repository for more information: <a href="https://github.com/TRL-RMF/caato2">caato github</a></p>
+<h2 id="operational-workflow"><a class="header" href="#operational-workflow">Operational WorkFlow</a></h2>
+<p><img src="./img/download_(1).png" alt="download (1).png" /></p>
+<h2 id="autonomy"><a class="header" href="#autonomy">Autonomy</a></h2>
+<h3 id="introduction-1"><a class="header" href="#introduction-1">Introduction</a></h3>
+<p>The autonomy of the CAATO implementation consists of two main parts: navigation stack and computer vision intelligence.</p>
+<p>A single board computer (SBC) and sagemaker is used to achieve the two parts. Currently both are running ROS Noetic with Ubuntu 20.04 setup.</p>
+<h3 id="architecture"><a class="header" href="#architecture">Architecture</a></h3>
+<p>Major components of the overall system is shown below in the figure.</p>
+<ul>
+<li>NUC
+<ul>
+<li>Perform mapping, localization, path planninig</li>
+</ul>
+</li>
+<li>SageMaker</li>
+<li>Roboteq controller
+<ul>
+<li>Perform BLDC motors control (closed loop speed control, i.e. <code>cmd_vel</code>)</li>
+</ul>
+</li>
+<li>Pixhawk IMU
+<ul>
+<li>Perform data fusion with odometry</li>
+<li>GPS location if outdoor</li>
+</ul>
+</li>
+<li>Hokuyo LiDAR
+<ul>
+<li>To perform 270 degree laser scan by combining one front-left LIDAR and one one right-rear LIDAR</li>
+</ul>
+</li>
+<li>Ouster LiDAR (OS1-32)
+<ul>
+<li>To perform 360 degree laser scan needed to carry out mapping and localization.</li>
+</ul>
+</li>
+</ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="next" href="Introduction.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="Software.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
@@ -149,7 +189,7 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="next" href="Introduction.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="Software.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

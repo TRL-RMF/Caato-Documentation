@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - caato book</title>
+        <title>Table of Electronics - caato book</title>
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="caato.html">Caato</a></li><li class="chapter-item expanded "><a href="Introduction.html" class="active"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="Software.html"><strong aria-hidden="true">2.</strong> Software</a></li><li class="chapter-item expanded "><a href="Mechanical.html"><strong aria-hidden="true">3.</strong> Mechanical</a></li><li class="chapter-item expanded "><a href="Electrical.html"><strong aria-hidden="true">4.</strong> Electricacl & Electronics</a></li><li class="chapter-item expanded "><a href="Other.html"><strong aria-hidden="true">5.</strong> Other Peripherals</a></li><li class="chapter-item expanded "><a href="BOM.html"><strong aria-hidden="true">6.</strong> BOM</a></li><li class="chapter-item expanded "><a href="Operation.html"><strong aria-hidden="true">7.</strong> Operation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="3D.html"><strong aria-hidden="true">7.1.</strong> 3D Mapping</a></li></ol></li><li class="chapter-item expanded "><a href="Future.html"><strong aria-hidden="true">8.</strong> Future Upgrades</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="caato.html">Caato*</a></li><li class="chapter-item expanded "><a href="Software.html"><strong aria-hidden="true">1.</strong> Software</a></li><li class="chapter-item expanded "><a href="Mechanical.html"><strong aria-hidden="true">2.</strong> Mechanical</a></li><li class="chapter-item expanded "><a href="Electrical.html"><strong aria-hidden="true">3.</strong> Electricacl & Electronics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Table.html" class="active"><strong aria-hidden="true">3.1.</strong> Table of Electronics</a></li><li class="chapter-item expanded "><a href="Power.html"><strong aria-hidden="true">3.2.</strong> Power Diagram and Schematics</a></li><li class="chapter-item expanded "><a href="Programmable.html"><strong aria-hidden="true">3.3.</strong> Programmable Logic Controller</a></li></ol></li><li class="chapter-item expanded "><a href="Other.html"><strong aria-hidden="true">4.</strong> Other Peripherals</a></li><li class="chapter-item expanded "><a href="BOM.html"><strong aria-hidden="true">5.</strong> BOM</a></li><li class="chapter-item expanded "><a href="Operation.html"><strong aria-hidden="true">6.</strong> Operation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="3D.html"><strong aria-hidden="true">6.1.</strong> 3D Mapping</a></li></ol></li><li class="chapter-item expanded "><a href="Future.html"><strong aria-hidden="true">7.</strong> Future Upgrades</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -134,16 +134,36 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
-
+                        <h1 id="table-of-electronics"><a class="header" href="#table-of-electronics">Table of Electronics</a></h1>
+<p>double check</p>
+<div class="table-wrapper"><table><thead><tr><th>COMPONENT</th><th>MODEL NUMBER</th><th>#</th><th>PORTS</th><th>VOLTAGE RATING</th><th>MAX CURRENT DRAW</th><th>REMARKS</th></tr></thead><tbody>
+<tr><td>HOKUYO 2D LIDAR</td><td>UST-10LX</td><td>2</td><td>ETHERNET + POWER</td><td>24</td><td></td><td></td></tr>
+<tr><td>PIXHAWK IMU/GPS</td><td>PIXHAWK 4</td><td>1</td><td>USB</td><td>-</td><td></td><td>Connected to SBC</td></tr>
+<tr><td>REAL SENSE DEPTH CAMERA</td><td>D435</td><td>2</td><td>USB </td><td>-</td><td></td><td>Connected to SBC</td></tr>
+<tr><td>ROUTER</td><td>AX11000</td><td>1</td><td>POWER + ETHERNET</td><td>12</td><td></td><td></td></tr>
+<tr><td>MIC-770 V2 (SBC)</td><td></td><td>1</td><td>POWER</td><td>19</td><td></td><td>Might change</td></tr>
+<tr><td>PLC</td><td>CX9020EL1809EL2809EL3681x2EL6022EL7332</td><td>1</td><td>POWER + ETHERNET+RS485</td><td>24</td><td></td><td></td></tr>
+<tr><td>LEISHEN 3D LIDAR</td><td>C16-700B</td><td>1</td><td>POWER + ETHERNET</td><td>12</td><td></td><td></td></tr>
+<tr><td>DREAMVU 360 CAMERA</td><td>PAL USB</td><td>1</td><td>USB</td><td>-</td><td></td><td>Connected to SBC</td></tr>
+<tr><td>WHEEL MOTOR + ROBOTEQ</td><td>SBL3260T</td><td>2</td><td>POWER + ENCODER + HALL SENSORS+RS485</td><td>24</td><td></td><td></td></tr>
+<tr><td>LIFTING MOTOR</td><td>24V DC MOTOR</td><td>1</td><td>POWER+BRAKE</td><td>24</td><td></td><td></td></tr>
+<tr><td>JETSON </td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>INFRARED SENSOR</td><td>GP2Y0A21YK</td><td>2</td><td>POWER+ANALOG OUT (JST terminal)</td><td>5</td><td></td><td></td></tr>
+<tr><td>LASER BREAK SENSOR</td><td>EE-SX 674</td><td>2</td><td>POWER + ANALOG OUT</td><td>5</td><td></td><td></td></tr>
+<tr><td>E-STOP BUTTON</td><td>AVW411-R</td><td>1</td><td>1NC1NO</td><td>--</td><td></td><td></td></tr>
+<tr><td>KARTECH E-STOP</td><td>3A4663</td><td>1</td><td>POWER+DIG OUTx2</td><td>9-30V</td><td></td><td></td></tr>
+<tr><td>FORCE RESISTOR</td><td>FSR MODEL 408 34-23845</td><td>6</td><td>VIN + VOUT</td><td>--</td><td> </td><td>Might Change</td></tr>
+<tr><td>DC-DC SOLID STATE RELAY</td><td>1DD220D25</td><td>1</td><td>VIN +VOUT, VCONTROL + GND</td><td>&lt;220V, 3-32V</td><td>25A</td><td>Between PLC and Roboteq Supply</td></tr>
+</tbody></table>
+</div>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="caato.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="Electrical.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                            <a rel="next" href="Software.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="Power.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
@@ -152,10 +172,10 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="caato.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="Electrical.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                    <a rel="next" href="Software.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="Power.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

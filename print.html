@@ -76,7 +76,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="caato.html">Caato</a></li><li class="chapter-item expanded "><a href="Introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="Software.html"><strong aria-hidden="true">2.</strong> Software</a></li><li class="chapter-item expanded "><a href="Mechanical.html"><strong aria-hidden="true">3.</strong> Mechanical</a></li><li class="chapter-item expanded "><a href="Electrical.html"><strong aria-hidden="true">4.</strong> Electricacl & Electronics</a></li><li class="chapter-item expanded "><a href="Other.html"><strong aria-hidden="true">5.</strong> Other Peripherals</a></li><li class="chapter-item expanded "><a href="BOM.html"><strong aria-hidden="true">6.</strong> BOM</a></li><li class="chapter-item expanded "><a href="Operation.html"><strong aria-hidden="true">7.</strong> Operation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="3D.html"><strong aria-hidden="true">7.1.</strong> 3D Mapping</a></li></ol></li><li class="chapter-item expanded "><a href="Future.html"><strong aria-hidden="true">8.</strong> Future Upgrades</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="caato.html">Caato*</a></li><li class="chapter-item expanded "><a href="Software.html"><strong aria-hidden="true">1.</strong> Software</a></li><li class="chapter-item expanded "><a href="Mechanical.html"><strong aria-hidden="true">2.</strong> Mechanical</a></li><li class="chapter-item expanded "><a href="Electrical.html"><strong aria-hidden="true">3.</strong> Electricacl & Electronics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Table.html"><strong aria-hidden="true">3.1.</strong> Table of Electronics</a></li><li class="chapter-item expanded "><a href="Power.html"><strong aria-hidden="true">3.2.</strong> Power Diagram and Schematics</a></li><li class="chapter-item expanded "><a href="Programmable.html"><strong aria-hidden="true">3.3.</strong> Programmable Logic Controller</a></li></ol></li><li class="chapter-item expanded "><a href="Other.html"><strong aria-hidden="true">4.</strong> Other Peripherals</a></li><li class="chapter-item expanded "><a href="BOM.html"><strong aria-hidden="true">5.</strong> BOM</a></li><li class="chapter-item expanded "><a href="Operation.html"><strong aria-hidden="true">6.</strong> Operation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="3D.html"><strong aria-hidden="true">6.1.</strong> 3D Mapping</a></li></ol></li><li class="chapter-item expanded "><a href="Future.html"><strong aria-hidden="true">7.</strong> Future Upgrades</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -136,10 +136,72 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="caato"><a class="header" href="#caato">caato</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<h1 id="introduction"><a class="header" href="#introduction">Introduction*</a></h1>
+<p>The CAATO is a small, nimble Autonomous Ground Vehicle (AGV) developed off of the LOCUST platform with more powerful and accurate motors and a patented (TBC) trolley docking mechanism. This platform will be the first-ever robot to be deployed under the Robotic middleware framework RMF 2.0 program and is developed in joint collaboration with Changi Airport.</p>
+<p>Checkout the CAATO repository for more information: <a href="https://github.com/TRL-RMF/caato2">caato github</a></p>
+<h2 id="operational-workflow"><a class="header" href="#operational-workflow">Operational WorkFlow</a></h2>
+<p><img src="./img/download_(1).png" alt="download (1).png" /></p>
+<h2 id="autonomy"><a class="header" href="#autonomy">Autonomy</a></h2>
+<h3 id="introduction-1"><a class="header" href="#introduction-1">Introduction</a></h3>
+<p>The autonomy of the CAATO implementation consists of two main parts: navigation stack and computer vision intelligence.</p>
+<p>A single board computer (SBC) and sagemaker is used to achieve the two parts. Currently both are running ROS Noetic with Ubuntu 20.04 setup.</p>
+<h3 id="architecture"><a class="header" href="#architecture">Architecture</a></h3>
+<p>Major components of the overall system is shown below in the figure.</p>
+<ul>
+<li>NUC
+<ul>
+<li>Perform mapping, localization, path planninig</li>
+</ul>
+</li>
+<li>SageMaker</li>
+<li>Roboteq controller
+<ul>
+<li>Perform BLDC motors control (closed loop speed control, i.e. <code>cmd_vel</code>)</li>
+</ul>
+</li>
+<li>Pixhawk IMU
+<ul>
+<li>Perform data fusion with odometry</li>
+<li>GPS location if outdoor</li>
+</ul>
+</li>
+<li>Hokuyo LiDAR
+<ul>
+<li>To perform 270 degree laser scan by combining one front-left LIDAR and one one right-rear LIDAR</li>
+</ul>
+</li>
+<li>Ouster LiDAR (OS1-32)
+<ul>
+<li>To perform 360 degree laser scan needed to carry out mapping and localization.</li>
+</ul>
+</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="software"><a class="header" href="#software">Software</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="mechanical"><a class="header" href="#mechanical">Mechanical</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="electricacl--electronics"><a class="header" href="#electricacl--electronics">Electricacl &amp; Electronics</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="table-of-electronics"><a class="header" href="#table-of-electronics">Table of Electronics</a></h1>
+<p>double check</p>
+<div class="table-wrapper"><table><thead><tr><th>COMPONENT</th><th>MODEL NUMBER</th><th>#</th><th>PORTS</th><th>VOLTAGE RATING</th><th>MAX CURRENT DRAW</th><th>REMARKS</th></tr></thead><tbody>
+<tr><td>HOKUYO 2D LIDAR</td><td>UST-10LX</td><td>2</td><td>ETHERNET + POWER</td><td>24</td><td></td><td></td></tr>
+<tr><td>PIXHAWK IMU/GPS</td><td>PIXHAWK 4</td><td>1</td><td>USB</td><td>-</td><td></td><td>Connected to SBC</td></tr>
+<tr><td>REAL SENSE DEPTH CAMERA</td><td>D435</td><td>2</td><td>USB </td><td>-</td><td></td><td>Connected to SBC</td></tr>
+<tr><td>ROUTER</td><td>AX11000</td><td>1</td><td>POWER + ETHERNET</td><td>12</td><td></td><td></td></tr>
+<tr><td>MIC-770 V2 (SBC)</td><td></td><td>1</td><td>POWER</td><td>19</td><td></td><td>Might change</td></tr>
+<tr><td>PLC</td><td>CX9020EL1809EL2809EL3681x2EL6022EL7332</td><td>1</td><td>POWER + ETHERNET+RS485</td><td>24</td><td></td><td></td></tr>
+<tr><td>LEISHEN 3D LIDAR</td><td>C16-700B</td><td>1</td><td>POWER + ETHERNET</td><td>12</td><td></td><td></td></tr>
+<tr><td>DREAMVU 360 CAMERA</td><td>PAL USB</td><td>1</td><td>USB</td><td>-</td><td></td><td>Connected to SBC</td></tr>
+<tr><td>WHEEL MOTOR + ROBOTEQ</td><td>SBL3260T</td><td>2</td><td>POWER + ENCODER + HALL SENSORS+RS485</td><td>24</td><td></td><td></td></tr>
+<tr><td>LIFTING MOTOR</td><td>24V DC MOTOR</td><td>1</td><td>POWER+BRAKE</td><td>24</td><td></td><td></td></tr>
+<tr><td>JETSON </td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>INFRARED SENSOR</td><td>GP2Y0A21YK</td><td>2</td><td>POWER+ANALOG OUT (JST terminal)</td><td>5</td><td></td><td></td></tr>
+<tr><td>LASER BREAK SENSOR</td><td>EE-SX 674</td><td>2</td><td>POWER + ANALOG OUT</td><td>5</td><td></td><td></td></tr>
+<tr><td>E-STOP BUTTON</td><td>AVW411-R</td><td>1</td><td>1NC1NO</td><td>--</td><td></td><td></td></tr>
+<tr><td>KARTECH E-STOP</td><td>3A4663</td><td>1</td><td>POWER+DIG OUTx2</td><td>9-30V</td><td></td><td></td></tr>
+<tr><td>FORCE RESISTOR</td><td>FSR MODEL 408 34-23845</td><td>6</td><td>VIN + VOUT</td><td>--</td><td> </td><td>Might Change</td></tr>
+<tr><td>DC-DC SOLID STATE RELAY</td><td>1DD220D25</td><td>1</td><td>VIN +VOUT, VCONTROL + GND</td><td>&lt;220V, 3-32V</td><td>25A</td><td>Between PLC and Roboteq Supply</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="power-diagram-and-schematics"><a class="header" href="#power-diagram-and-schematics">Power Diagram and Schematics</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="programmable-logic-controller-plc"><a class="header" href="#programmable-logic-controller-plc">Programmable Logic Controller (PLC)</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="other-peripherals"><a class="header" href="#other-peripherals">Other Peripherals</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="bom"><a class="header" href="#bom">BOM</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="deployment--operation-concerns"><a class="header" href="#deployment--operation-concerns">Deployment &amp; Operation Concerns</a></h1>
