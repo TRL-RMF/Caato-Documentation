@@ -8,4 +8,5 @@
 - [Other Peripherals](./Other.md)
 - [BOM](./BOM.md)
 - [Operation](./Operation.md)
+    - [3D Mapping](./3D.md)
 - [Future Upgrades](./Future.md)
