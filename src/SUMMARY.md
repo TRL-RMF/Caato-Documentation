@@ -1,10 +1,10 @@
 # Summary
 
-[CAATO](caato.md)
-- [Software](./Software.md)
-- [Mechanical](./Mechanical.md)
-- [Electricacl & Electronics](./Electrical.md)
-    - [Table of Electronics](./Table.md)
+[CAATO*](caato.md)
+- [Software*](./Software.md)
+- [Mechanical*](./Mechanical.md)
+- [Electrical & Electronics](./Electrical.md)
+    - [Table of Electronics*](./Table.md)
     - [Power Diagram and Schematics](./Power.md)
     - [Programmable Logic Controller](./Programmable.md)
     - [PCB](./Pcb.md)

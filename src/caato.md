@@ -1,4 +1,4 @@
-# caato
+# CAATO
 
 ## Introduction
 
