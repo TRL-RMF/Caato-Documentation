@@ -4,20 +4,12 @@
 
 - For Caato2 to carry out its tasks using ROS, certain commands are needed to be executed
 - Various packages are available to be implemented onto Caato2
-    - Git Clone from [GitHub - CAATO](https://github.com/TRL-RMF/caato2)
+    - Git Clone from
+        
+        [GitHub - TRL-RMF/caato2: Robot files for CAATO2.](https://github.com/TRL-RMF/caato2)
         
 
-## Packages
-
-1. caato2_bringup
-    - 
-2. caato2_navigation
-    - 
-3. caato2_gazebo
-4. AMCL3d
-    - **Adaptive Monte-Carlo Localization in 3D** is a particle filter that allows you to estimate where a robot is within a 3D environment without using GPS, for example in indoor environments.
-
-## Launch Files
+## Packages and Launch Files
 
 1. Caato2_bringup
     - Launches certain relevant nodes which are needed for basic operation and functionality
@@ -27,13 +19,26 @@
         - DS4 Driver - Enable control of Caato2 using a remote joystick
 2. Caato2_navigation
     - Launches relevant stacks needed for navigation
-        - AMCL
-        - DWA
         - EBAND (Preferred)
+        - DWA
         - TEB
-3. (Cartographer) (2D & 3D)
-    - 
-4. Xnergy charger
+3. Cartographer (2D & 3D)
+    - Cartographer is a system that provides real-time simultaneous localization and mapping (SLAM) in 2D and 3D across multiple platforms and sensor configurations.
+    - For detailed tutorials on Cartographer implementation with ROS please go to the following link.
+    
+    [Cartographer ROS Integration - Cartographer ROS documentation](https://google-cartographer-ros.readthedocs.io/)
+    
+4. AMCL3D
+    - **Adaptive Monte-Carlo Localization in 3D** is a particle filter that allows you to estimate where a robot is within a 3D environment without using GPS, for example in indoor environments.
+    - The algorithm uses radio-range sensors, laser sensors, and a known map of the environment for calculating the particles weights. The algorithm takes as inputs an odometry, point-clouds that the robot sees and the distances between range sensors that are in the environment. It compares the map point-cloud with the robot point-clouds and takes into account the radio-range measurements to calculate the probability that the robot is in a bounded environment. In such environment, the particles have different weights according to each computed probability. The weighted average of all the particles would give the result of the robot pose (position and orientation).
+    
+    ![montecarlo.jpg](./img/montecarlo.jpg)
+    
+
+1. Octomap
+    
+    
+2. Xnergy charger
     - roslaunch xnergy_charger_rcu xnergy_charger_modbus.launch
         - Launches the modbus communication between the charger and the RCU
     - rosservice call /xnergy_charger_rcu/start_charging
