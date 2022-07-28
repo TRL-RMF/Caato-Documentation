@@ -6,4 +6,8 @@ A programmable logic controller (PLC) was added for the second iteration of CAAT
 2. Actuator Control - The PLC’s power, ruggedness and expandable I/O provide advantages over a basic microcontroller. We intend for the PLC to take over control of the trolley lift arm, which is currently operated by an Arduino Uno.
 3. Machine Interface and Status Monitoring - The PLC will act as a central control hub, monitoring the status of electronics and the individual voltage terminals. This information will be displayed on an LCD touchscreen for quick troubleshooting and testing.
 
-[Software](https://www.notion.so/Software-1491aca9b447436388bce194a45310fa)
+### Software
+
+The software that we are using for our Allen Bradley Micro820 is Connected Components Workbench. To learn how to use this software check out.
+
+[Connected Components Workbench Software Tutorials](https://www.rockwellautomation.com/en-us/capabilities/industrial-automation-control/design-and-configuration-software/ccw-software-training-videos.html)
