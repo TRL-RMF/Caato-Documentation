@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="caato.html">CAATO*</a></li><li class="chapter-item expanded "><a href="Software.html"><strong aria-hidden="true">1.</strong> Software*</a></li><li class="chapter-item expanded "><a href="Mechanical.html"><strong aria-hidden="true">2.</strong> Mechanical*</a></li><li class="chapter-item expanded "><a href="Electrical.html"><strong aria-hidden="true">3.</strong> Electrical & Electronics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Table.html"><strong aria-hidden="true">3.1.</strong> Table of Electronics*</a></li><li class="chapter-item expanded "><a href="Power.html"><strong aria-hidden="true">3.2.</strong> Power Diagram and Schematics</a></li><li class="chapter-item expanded "><a href="Programmable.html"><strong aria-hidden="true">3.3.</strong> Programmable Logic Controller</a></li><li class="chapter-item expanded "><a href="Pcb.html"><strong aria-hidden="true">3.4.</strong> PCB</a></li></ol></li><li class="chapter-item expanded "><a href="Other.html"><strong aria-hidden="true">4.</strong> Other Peripherals</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Arm.html" class="active"><strong aria-hidden="true">4.1.</strong> CAATO Arm</a></li><li class="chapter-item expanded "><a href="Strip.html"><strong aria-hidden="true">4.2.</strong> LED Strip</a></li><li class="chapter-item expanded "><a href="Alexa.html"><strong aria-hidden="true">4.3.</strong> Amazon Alexa</a></li><li class="chapter-item expanded "><a href="Panel.html"><strong aria-hidden="true">4.4.</strong> LED Panel</a></li><li class="chapter-item expanded "><a href="Roboteq.html"><strong aria-hidden="true">4.5.</strong> Roboteq and Motor Tuning</a></li></ol></li><li class="chapter-item expanded "><a href="BOM.html"><strong aria-hidden="true">5.</strong> BOM</a></li><li class="chapter-item expanded "><a href="Operation.html"><strong aria-hidden="true">6.</strong> Operation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="site.html"><strong aria-hidden="true">6.1.</strong> On-Site Operation</a></li><li class="chapter-item expanded "><a href="3D.html"><strong aria-hidden="true">6.2.</strong> 3D Mapping</a></li><li class="chapter-item expanded "><a href="testing.html"><strong aria-hidden="true">6.3.</strong> Testing Plan (Navigation)</a></li></ol></li><li class="chapter-item expanded "><a href="Annex.html"><strong aria-hidden="true">7.</strong> Annex</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="caato.html">CAATO*</a></li><li class="chapter-item expanded "><a href="Software.html"><strong aria-hidden="true">1.</strong> Software*</a></li><li class="chapter-item expanded "><a href="Mechanical.html"><strong aria-hidden="true">2.</strong> Mechanical*</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Full.html"><strong aria-hidden="true">2.1.</strong> Full Assembly</a></li><li class="chapter-item expanded "><a href="Drive.html"><strong aria-hidden="true">2.2.</strong> Drivetrain Assembly</a></li><li class="chapter-item expanded "><a href="Chassis.html"><strong aria-hidden="true">2.3.</strong> Chassis Assembly</a></li><li class="chapter-item expanded "><a href="BOM_mec.html"><strong aria-hidden="true">2.4.</strong> BOM</a></li></ol></li><li class="chapter-item expanded "><a href="Electrical.html"><strong aria-hidden="true">3.</strong> Electrical & Electronics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Table.html"><strong aria-hidden="true">3.1.</strong> Table of Electronics*</a></li><li class="chapter-item expanded "><a href="Power.html"><strong aria-hidden="true">3.2.</strong> Power Diagram and Schematics</a></li><li class="chapter-item expanded "><a href="Programmable.html"><strong aria-hidden="true">3.3.</strong> Programmable Logic Controller</a></li></ol></li><li class="chapter-item expanded "><a href="Other.html"><strong aria-hidden="true">4.</strong> Other Peripherals</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="Arm.html" class="active"><strong aria-hidden="true">4.1.</strong> CAATO Arm</a></li><li class="chapter-item expanded "><a href="Strip.html"><strong aria-hidden="true">4.2.</strong> LED Strip</a></li><li class="chapter-item expanded "><a href="Alexa.html"><strong aria-hidden="true">4.3.</strong> Amazon Alexa</a></li><li class="chapter-item expanded "><a href="Panel.html"><strong aria-hidden="true">4.4.</strong> LED Panel</a></li><li class="chapter-item expanded "><a href="Roboteq.html"><strong aria-hidden="true">4.5.</strong> Roboteq and Motor Tuning</a></li></ol></li><li class="chapter-item expanded "><a href="BOM.html"><strong aria-hidden="true">5.</strong> BOM</a></li><li class="chapter-item expanded "><a href="Operation.html"><strong aria-hidden="true">6.</strong> Operation</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="site.html"><strong aria-hidden="true">6.1.</strong> On-Site Operation</a></li><li class="chapter-item expanded "><a href="3D.html"><strong aria-hidden="true">6.2.</strong> 3D Mapping</a></li><li class="chapter-item expanded "><a href="testing.html"><strong aria-hidden="true">6.3.</strong> Testing Plan (Navigation)</a></li></ol></li><li class="chapter-item expanded "><a href="Annex.html"><strong aria-hidden="true">7.</strong> Annex</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -135,6 +135,47 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="caato-arm"><a class="header" href="#caato-arm">CAATO Arm</a></h1>
+<aside>
+💡 Create a new page and select `Product Spec` ****from the list of template options to automatically generate the format below.
+</aside>
+<h1 id="hardware"><a class="header" href="#hardware">Hardware</a></h1>
+<h2 id="photomicro-sensor"><a class="header" href="#photomicro-sensor">Photomicro Sensor</a></h2>
+<p>We used 2 pairs of photomicro sensors, one to detect if the arm is lifted to the top, and one to detect if the arm is at the bottom. </p>
+<p>Each pair consists of an emitter and a detector. When the arm is moved into the top or bottom position, it will block the laser beam coming from the respective emitter, and its corresponding detector will detect a decrease in optical energy. An output signal will then be sent to the arduino microcontroller. </p>
+<p>There are 4 wires connected to each sensor. </p>
+<ul>
+<li><strong>Brown:</strong> live</li>
+<li><strong>Black:</strong> output</li>
+<li><strong>Blue:</strong> ground</li>
+<li><strong>White:</strong> not in use</li>
+</ul>
+<h2 id="breakbeam-sensor"><a class="header" href="#breakbeam-sensor">Breakbeam Sensor</a></h2>
+<p>2 pairs of breakbeam sensors were used to detect the docking status of the trolley. They work in a very similar fashion to the photomicro sensors mentioned in the previous paragraph. </p>
+<p>If the trolley is properly engaged by the arm, the laser beam from the emitter will be blocked and cannot reach the detector. The sensors will then output a “FALSE” value. </p>
+<p>We placed one pair of breakbeam sensors on each side of the arm. In order for the trolley to be considered successfully docked, the breakbeam sensors on both sides must return a “FALSE” value. If the laser beam from only one, or neither, pair of breakbeam sensors is blocked, the trolley is considered incorrectly docked, and the arm will be lowered back to the bottom position for the robot to re-attempt the docking action.</p>
+<p>There are 3 wires connected to each detector (but only 2 for each transmitter, which lacks a signal wire).</p>
+<ul>
+<li><strong>Black:</strong> ground</li>
+<li><strong>Red:</strong> live</li>
+<li><strong>White:</strong> signal (see “Arduino” section below for wiring information)</li>
+</ul>
+<h2 id="arduino"><a class="header" href="#arduino">Arduino</a></h2>
+<p>The arduino is used to check the output from the sensors and provide input to the dc motor driver.</p>
+<p>In our current implementation of CAATO2, the wiring of the various signal pins is as follows:</p>
+<ul>
+<li><strong>4:</strong> Top photomicro sensors</li>
+<li><strong>6:</strong> Bottom photmicro sensors</li>
+<li><strong>7:</strong> Breakbeam sensor 1</li>
+<li><strong>12:</strong> Breakbeam sensor 2</li>
+</ul>
+<h2 id="dc-motor-driver"><a class="header" href="#dc-motor-driver">DC Motor Driver</a></h2>
+<p>The motor driver is used to check inputs from the arduino and provide output to the linear motor. We give a 24V input to the dc motor driver. We power the arduino through the 5v regulator from the dc motor driver.</p>
+<h2 id="stripboard"><a class="header" href="#stripboard">Stripboard</a></h2>
+<p>We used the stripboard to connect the sensors to the arduino.</p>
+<p>After seeing all the codes, all the pinouts will make much more sense.</p>
+<hr />
+<h1 id="software"><a class="header" href="#software">Software</a></h1>
+<p>check out the repository for caato arm at https://github.com/TRL-RMF/bb_ros</p>
 
                     </main>
 
